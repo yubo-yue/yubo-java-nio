@@ -1,6 +1,8 @@
 package ch02;
 
 import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.CharBuffer;
 import java.nio.IntBuffer;
 
@@ -13,7 +15,9 @@ public class Examples {
 			.getLogger(Examples.class);
 
 	public static void main(String[] args) {
-		createBuffer();
+		//createBuffer();
+		//duplicateBuffer();
+		Examples.bufferView();
 	}
 
 	public static void bulkMove() {
@@ -42,6 +46,35 @@ public class Examples {
 		int[] intArr = new int[100];
 		IntBuffer intBuffer = IntBuffer.wrap(intArr);
 		bufferSummary(intBuffer);
+	}
+	
+	public static void duplicateBuffer()
+	{
+		CharBuffer charBuffer = CharBuffer.allocate(8);
+		Examples.bufferSummary(charBuffer);
+		charBuffer.position(3).limit(6).mark().position(5);
+		Examples.bufferSummary(charBuffer);
+		CharBuffer dupBuffer = charBuffer.duplicate();
+		Examples.bufferSummary(dupBuffer);
+		dupBuffer.clear();
+		Examples.bufferSummary(dupBuffer);
+	}
+	
+	public static void bufferView()
+	{
+		ByteBuffer byteBuffer = ByteBuffer.allocate(7).order(ByteOrder.BIG_ENDIAN);
+		CharBuffer charBuffer = byteBuffer.asCharBuffer();
+		
+		byteBuffer.put(0, (byte) 0);
+		byteBuffer.put(1, (byte) 'H');
+		byteBuffer.put(2, (byte)0);
+		byteBuffer.put(3, (byte)'i');
+		byteBuffer.put(4, (byte)0);
+		byteBuffer.put(5, (byte)'!');
+		byteBuffer.put(6, (byte)0);
+		
+		bufferSummary(byteBuffer);
+		bufferSummary(charBuffer);
 	}
 
 	public static void bufferSummary(Buffer buffer) {
