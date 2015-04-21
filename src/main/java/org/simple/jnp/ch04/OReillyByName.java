@@ -1,4 +1,4 @@
-package org.simple.ch04;
+package org.simple.jnp.ch04;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
