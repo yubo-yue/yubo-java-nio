@@ -12,8 +12,7 @@ public class SocketInfo {
 	
 	public static void main(String[] args) {
 		for (String host : args) {
-			try {
-				Socket theSocket = new Socket(host, 80);
+			try (Socket theSocket = new Socket(host, 80)) {
 				LOGGER.info("connect to {} on port {} from port {} of {}", theSocket.getInetAddress(), theSocket.getPort(), theSocket.getLocalPort(), theSocket.getLocalAddress());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
